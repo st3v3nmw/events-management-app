@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "953512427822",
+    "firebase_url": "https://lana-events.firebaseio.com",
+    "project_id": "lana-events",
+    "storage_bucket": "lana-events.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953512427822:android:f0a7bff2b4480a6b377abf",
+        "android_client_info": {
+          "package_name": "com.aspinax.lanaevents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953512427822-3i2f2gs050etvbs1g9pb26323kkoc2ha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aspinax.lanaevents",
+            "certificate_hash": "db8d367bd030a80f6aac10ad91348ab695893725"
+          }
+        },
+        {
+          "client_id": "953512427822-1pgan674ijdm9hj7cgfkug45fj1s39pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOjogELHVsayKp7wi5ULWqTueWKjMg2UE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953512427822-1pgan674ijdm9hj7cgfkug45fj1s39pa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
