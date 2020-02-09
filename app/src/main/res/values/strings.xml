@@ -1,9 +1,23 @@
 <resources>
     <string name="app_name">LanaEvents</string>
-    <string name="lana">Lana</string>
-    <string name="events">Events</string>
-    <string name="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</string>
+    <string name="lanaevents">Lana Events</string>
     <string name="next">Next</string>
     <string name="sign_up">SIGN UP</string>
     <string name="login">LOGIN</string>
+    <string name="teamimage">Team Image</string>
+    <string name="login_ill">Girl holding key next to phone, unlock</string>
+    <string name="welcome">Welcome,</string>
+    <string name="cntn">Continue</string>
+    <string name="forgotpass">Forgot Password?</string>
+    <string name="gmail">Gmail</string>
+    <string name="or">OR</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="welcome_ill">Happy boy, welcomes</string>
+    <string name="fname">Full Name</string>
+    <string name="email_val">Please provide a valid email address</string>
+    <string name="password_val">The password should have 8 or more characters</string>
+    <string name="fname_val">Please provide your full name</string>
+    <string name="signup_failed">Sign up Failed. Please try again.</string>
+    <string name="login_failed">Login Failed. Please try again.</string>
 </resources>

@@ -7,79 +7,51 @@
     tools:context=".NoAuthActivity">
 
     <TextView
-        android:id="@+id/lana"
-        android:layout_width="wrap_content"
+        android:id="@+id/lanaevents"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/montserrat"
-        android:text="@string/lana"
-        android:textSize="36sp"
+        android:text="@string/lanaevents"
+        android:textSize="30sp"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/events"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/events"
-        android:textSize="32sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lana" />
-
-    <TextView
-        android:id="@+id/intro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/intro"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/events" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="108dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/next"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/ic_undraw_team_spirit_hrr4"
+        app:layout_constraintTop_toBottomOf="@+id/lanaevents"
+        android:contentDescription="@string/teamimage"
+        tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/sign_up"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:background="@drawable/rounded_button_black"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/rounded_button_white"
         android:fontFamily="@font/montserrat"
         android:text="@string/sign_up"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/rounded_button_white"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rounded_button_blue"
         android:fontFamily="@font/montserrat"
         android:text="@string/login"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
