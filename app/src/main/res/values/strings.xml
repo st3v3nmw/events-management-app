@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">LanaEvents</string>
-    <string name="lanaevents">Lana Events</string>
+    <string name="app_name">Lana Events</string>
     <string name="next">Next</string>
     <string name="sign_up">SIGN UP</string>
     <string name="login">LOGIN</string>
@@ -20,4 +19,6 @@
     <string name="fname_val">Please provide your full name</string>
     <string name="signup_failed">Sign up Failed. Please try again.</string>
     <string name="login_failed">Login Failed. Please try again.</string>
+    <string name="forgotpass_ill">Forgot Password, thinking&#8230;</string>
+    <string name="recovery_instr">Please provide your email address to recover your account.</string>
 </resources>

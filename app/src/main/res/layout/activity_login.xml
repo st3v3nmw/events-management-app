@@ -40,8 +40,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:theme="@style/TextInputLayoutStyle"
-            app:layout_constraintTop_toBottomOf="@+id/welcome">
+            android:theme="@style/TextInputLayoutStyle">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -72,18 +71,18 @@
             android:text="@string/cntn"
             app:backgroundTint="#00bbff"/>
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/forgot_pass"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:text="@string/forgotpass"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_marginTop="4dp"
+            android:text="@string/forgotpass" />
 
         <View
             android:layout_width="350sp"
             android:layout_height="1dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:background="@android:color/darker_gray"/>
 
         <TextView
