@@ -20,7 +20,6 @@ public class NoAuthActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(NoAuthActivity.this, SignUpActivity.class));
-                finish();
             }
         });
 
@@ -28,7 +27,6 @@ public class NoAuthActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(NoAuthActivity.this, LoginActivity.class));
-                finish();
             }
         });
     }

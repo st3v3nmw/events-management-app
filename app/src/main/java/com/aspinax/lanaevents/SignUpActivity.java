@@ -61,8 +61,9 @@ public class SignUpActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {}
                                                         });
-                                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                                                finish();
+                                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
                                             } else {
                                                 Toast.makeText(getApplicationContext(), getString(R.string.signup_failed), Toast.LENGTH_SHORT).show();
                                             }
