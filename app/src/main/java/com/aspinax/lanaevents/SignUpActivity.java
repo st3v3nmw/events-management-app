@@ -17,11 +17,26 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.aspinax.lanaevents.LoginActivity.isValidEmail;
 import static com.aspinax.lanaevents.LoginActivity.isValidPassword;
 
 public class SignUpActivity extends AppCompatActivity {
+    final Database db = new Database(new AsyncResponse() {
+        @Override
+        public void resultHandler(Map<String, Object> result, int resultCode) {
+
+        }
+
+        @Override
+        public void resultHandler(String msg) {
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +76,15 @@ public class SignUpActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {}
                                                         });
+
+                                                String[] names = fullname.split(" ");
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("fName", names[0]);
+                                                data.put("lName", names[1]);
+                                                data.put("email", email);
+                                                data.put("created", FieldValue.serverTimestamp());
+                                                data.put("access", 0);
+                                                db.insert("users", user.getUid(), data);
                                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
