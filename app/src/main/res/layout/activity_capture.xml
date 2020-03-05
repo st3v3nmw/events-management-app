@@ -1,0 +1,8 @@
+<activity android:name=".CaptureActivityPortrait"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:screenOrientation="portrait"
+    android:stateNotNeeded="true"
+    android:theme="@style/zxing_CaptureTheme"
+    android:windowSoftInputMode="stateAlwaysHidden"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

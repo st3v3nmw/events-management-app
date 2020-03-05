@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/discover"
+        android:state_checked="true"
+        android:title="Discover"
+        android:icon="@drawable/ic_compass" />
+
+    <item
+        android:id="@+id/myevents"
+        android:state_checked="false"
+        android:title="My Events"
+        android:icon="@drawable/ic_schedule" />
+
+    <item
+        android:id="@+id/profile"
+        android:state_checked="false"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile" />
+</menu>
