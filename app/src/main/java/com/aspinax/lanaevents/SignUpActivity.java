@@ -15,29 +15,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FieldValue;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.aspinax.lanaevents.LoginActivity.isValidEmail;
 import static com.aspinax.lanaevents.LoginActivity.isValidPassword;
 
 public class SignUpActivity extends AppCompatActivity {
-    final Database db = new Database(new AsyncResponse() {
-        @Override
-        public void resultHandler(Map<String, Object> result, int resultCode) {
-
-        }
-
-        @Override
-        public void resultHandler(String msg) {
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-        }
-    });
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +29,6 @@ public class SignUpActivity extends AppCompatActivity {
         final FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         final MaterialButton sign_up_btn = findViewById(R.id.sign_up_btn);
-        final MaterialButton gmail_signup = findViewById(R.id.gmail_sign_up);
         final TextInputEditText fullnameView = findViewById(R.id.full_name);
         final TextInputEditText emailView = findViewById(R.id.email);
         final TextInputEditText passwordView = findViewById(R.id.password);
@@ -66,26 +48,8 @@ public class SignUpActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
-                                                FirebaseUser user = mAuth.getCurrentUser();
-                                                UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                                        .setDisplayName(fullname)
-                                                        .build();
-
-                                                user.updateProfile(profileUpdate)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {}
-                                                        });
-
-                                                String[] names = fullname.split(" ");
-                                                Map<String, Object> data = new HashMap<>();
-                                                data.put("fName", names[0]);
-                                                data.put("lName", names[1]);
-                                                data.put("email", email);
-                                                data.put("created", FieldValue.serverTimestamp());
-                                                data.put("access", 0);
-                                                db.insert("users", user.getUid(), data);
-                                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                Person.saveUser(mAuth, fullname, email, FieldValue.serverTimestamp());
+                                                Intent intent = new Intent(SignUpActivity.this, UserMainActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
                                             } else {
@@ -102,13 +66,6 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     fullnameView.setError(getString(R.string.fname_val));
                 }
-            }
-        });
-
-        gmail_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }

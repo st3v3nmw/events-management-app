@@ -82,29 +82,6 @@
             android:layout_marginTop="16dp"
             android:text="@string/cntn"
             app:backgroundTint="#00bbff"/>
-
-        <View
-            android:layout_width="350sp"
-            android:layout_height="1dp"
-            android:layout_marginTop="24dp"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:text="@string/or"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_marginTop="-12dp"
-            android:background="#fafafa" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/gmail_sign_up"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/gmail" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

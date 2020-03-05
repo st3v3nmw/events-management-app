@@ -16,18 +16,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Database {
-    private FirebaseFirestore db;
+    public static FirebaseFirestore db;
     private AsyncResponse response;
 
     public Database(AsyncResponse obj) {
-        this.db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         this.response = obj;
     }
 
     // CREATE
     public void insert(String collectionName, String docId, Map data) {
-        final Misc.ResultStatus result = new Misc.ResultStatus();
-        this.db.collection(collectionName).document(docId)
+        db.collection(collectionName).document(docId)
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -36,8 +35,7 @@ public class Database {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        result.set(false, e.toString());
-                        response.resultHandler(e.toString());
+                        response.resultHandler(e.toString(), 0);
                     }
                 });
     }
@@ -45,7 +43,7 @@ public class Database {
     // READ
     public void readCollection(String collectionName, final Class<?> className, final int resultCode) {
         final Map<String, Object> result = new HashMap<>();
-        this.db.collection(collectionName)
+        db.collection(collectionName)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -56,14 +54,14 @@ public class Database {
                             }
                             response.resultHandler(result, resultCode);
                         } else {
-                                response.resultHandler(task.getException().toString());
+                                response.resultHandler(task.getException().toString(), 0);
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        response.resultHandler(e.toString());
+                        response.resultHandler(e.toString(), 0);
                     }
                 });
     }
@@ -71,7 +69,7 @@ public class Database {
     // READ SINGLE DOCUMENT
     public void read(String collectionName, String docId, final Class<?> className, final int resultCode) {
         final Map<String, Object> result = new HashMap<>();
-        this.db.collection(collectionName).document(docId)
+        db.collection(collectionName).document(docId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -85,22 +83,21 @@ public class Database {
                                 response.resultHandler(result, resultCode);
                             }
                         } else {
-                            response.resultHandler(task.getException().toString());
+                            response.resultHandler(task.getException().toString(), 0);
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        result.put("msg", e.toString());
+                        response.resultHandler(e.toString(), 0);
                     }
                 });
     }
 
     // UPDATE
     public void update(String collectionName, String docId, Map<String, Object> data) {
-        final Misc.ResultStatus result = new Misc.ResultStatus();
-        this.db.collection(collectionName).document(docId)
+        db.collection(collectionName).document(docId)
                 .update(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -110,7 +107,7 @@ public class Database {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        response.resultHandler(e.toString());
+                        response.resultHandler(e.toString(), 0);
                     }
                 });
     }
@@ -124,8 +121,7 @@ public class Database {
 
     // DELETE
     public void delete(String collectionName, String docId) {
-        final Misc.ResultStatus result = new Misc.ResultStatus();
-        this.db.collection(collectionName).document(docId)
+        db.collection(collectionName).document(docId)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -135,7 +131,7 @@ public class Database {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        response.resultHandler(e.toString());
+                        response.resultHandler(e.toString(), 0);
                     }
                 });
     }
