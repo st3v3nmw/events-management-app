@@ -6,9 +6,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -24,8 +26,8 @@ public class Database {
         this.response = obj;
     }
 
-    // CREATE
-    public void insert(String collectionName, String docId, Map data) {
+    // CREATE with predefined document id
+    public void set(String collectionName, String docId, Map data, final int resultCode) {
         db.collection(collectionName).document(docId)
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -35,12 +37,53 @@ public class Database {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        response.resultHandler(e.toString(), resultCode);
+                    }
+                });
+    }
+
+    // CREATE with auto id
+    public void add(String collectionName, Map data, final int resultCode) {
+        db.collection(collectionName)
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) { }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        response.resultHandler(e.toString(), resultCode);
+                    }
+                });
+    }
+
+    // QUERY
+    public void query(Query q, final Class<?> className, final int resultCode) {
+        final Map<String, Object> result = new HashMap<>();
+        q.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document: task.getResult()) {
+                                result.put(document.getId(), document.toObject(className));
+                            }
+                            response.resultHandler(result, resultCode);
+                        } else {
+                            response.resultHandler(task.getException().toString(), 0);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
                         response.resultHandler(e.toString(), 0);
                     }
                 });
     }
 
-    // READ
+    // READ ENTIRE COLLECTION
     public void readCollection(String collectionName, final Class<?> className, final int resultCode) {
         final Map<String, Object> result = new HashMap<>();
         db.collection(collectionName)
@@ -54,7 +97,7 @@ public class Database {
                             }
                             response.resultHandler(result, resultCode);
                         } else {
-                                response.resultHandler(task.getException().toString(), 0);
+                            response.resultHandler(task.getException().toString(), 0);
                         }
                     }
                 })
@@ -93,6 +136,21 @@ public class Database {
                         response.resultHandler(e.toString(), 0);
                     }
                 });
+    }
+
+    // FILTER, 1
+    public void filterWithOneField(String collectionName, String field, Object filter, Class<?> className, int resultCode) {
+        Query q = db.collection(collectionName)
+                .whereEqualTo(field, filter);
+        query(q, className, resultCode);
+    }
+
+    // FILTER, 2
+    public void filterWithTwoFields(String collectionName, String field1, Object filter1, String field2, Object filter2, Class<?> className, int resultCode) {
+        Query q = db.collection(collectionName)
+                .whereEqualTo(field1, filter1)
+                .whereEqualTo(field2, filter2);
+        query(q, className, resultCode);
     }
 
     // UPDATE

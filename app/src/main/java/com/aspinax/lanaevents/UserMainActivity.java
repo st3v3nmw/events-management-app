@@ -1,11 +1,19 @@
 package com.aspinax.lanaevents;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -42,6 +50,31 @@ public class UserMainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             }
         });
+
+        setDiscoverFragment();
+        BottomNavigationView bottomNav = findViewById(R.id.navigation);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                switch (item.getItemId()) {
+                    case R.id.discover:
+                        setDiscoverFragment();
+                        break;
+                    case R.id.myevents:
+                        UserEventsFragment eventsFragment = new UserEventsFragment();
+                        fragmentTransaction.replace(R.id.content, eventsFragment);
+                        fragmentTransaction.commit();
+                        break;
+                    case R.id.profile:
+                        UserProfileFragment profileFragment = new UserProfileFragment();
+                        fragmentTransaction.replace(R.id.content, profileFragment);
+                        fragmentTransaction.commit();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -54,5 +87,18 @@ public class UserMainActivity extends AppCompatActivity {
         } else {
             db.read("users", currentUser.getUid(), Person.class, 0);
         }
+    }
+
+    private void setDiscoverFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        UserDiscoverFragment discoverFragment = new UserDiscoverFragment();
+        fragmentTransaction.replace(R.id.content, discoverFragment);
+        fragmentTransaction.commit();
+    }
+
+    public static Bitmap decodeBase64(String base64String) {
+        base64String = base64String.substring(base64String.indexOf(",") + 1);
+        final byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 }
