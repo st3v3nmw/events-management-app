@@ -33,6 +33,7 @@ public class AgentMainActivity extends AppCompatActivity {
                 switch (resultCode) {
                     case 0:
                         p = (Agent) result.get(mAuth.getUid());
+                        Toast.makeText(getApplicationContext(), p.orgId, Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -64,9 +65,12 @@ public class AgentMainActivity extends AppCompatActivity {
                         integrator.initiateScan();
                         break;
                     case R.id.profile:
+                        AgentProfileFragment profileFragment = new AgentProfileFragment();
+                        fragmentTransaction.replace(R.id.content, profileFragment);
+                        fragmentTransaction.commit();
                         break;
                 }
-                return false;
+                return true;
             }
         });
     }

@@ -79,6 +79,6 @@ public class Person {
 
             }
         });
-        db.insert("users", user.getUid(), data);
+        db.set("users", user.getUid(), data, 0);
     }
 }
