@@ -32,7 +32,9 @@ public class Database {
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {}
+                    public void onSuccess(Void aVoid) {
+                        response.resultHandler("Success", resultCode);
+                    }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -48,7 +50,9 @@ public class Database {
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) { }
+                    public void onSuccess(DocumentReference documentReference) {
+                        response.resultHandler("Success", resultCode);
+                    }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -154,27 +158,28 @@ public class Database {
     }
 
     // UPDATE
-    public void update(String collectionName, String docId, Map<String, Object> data) {
+    public void update(String collectionName, String docId, Map<String, Object> data, final int resultCode) {
         db.collection(collectionName).document(docId)
                 .update(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        response.resultHandler("Success", resultCode);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        response.resultHandler(e.toString(), 0);
+                        response.resultHandler(e.toString(), resultCode);
                     }
                 });
     }
 
     // INCREMENT, DECREMENT
-    public void increment(String collectionName, String docId, String fieldName, Integer val) {
+    public void increment(String collectionName, String docId, String fieldName, Integer val, int resultCode) {
         Map<String, Object> updates = new HashMap<>();
         updates.put(fieldName, FieldValue.increment(val));
-        this.update(collectionName, docId, updates);
+        this.update(collectionName, docId, updates, resultCode);
     }
 
     // DELETE
@@ -195,11 +200,11 @@ public class Database {
     }
 
     // DELETE FIELDS
-    public void deleteFields(String collectionName, String docId, String[] fields) {
+    public void deleteFields(String collectionName, String docId, String[] fields, int resultCode) {
         Map<String, Object> updates = new HashMap<>();
         for (String field: fields) {
             updates.put(field, FieldValue.delete());
         }
-        this.update(collectionName, docId, updates);
+        this.update(collectionName, docId, updates, resultCode);
     }
 }

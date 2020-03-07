@@ -10,10 +10,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class AgentMainActivity extends AppCompatActivity {
@@ -40,7 +43,11 @@ public class AgentMainActivity extends AppCompatActivity {
 
             @Override
             public void resultHandler(String msg, int resultCode) {
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                if (resultCode == 1) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -90,7 +97,9 @@ public class AgentMainActivity extends AppCompatActivity {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Scan Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Map<String, Object> checkIn = new HashMap<>();
+                checkIn.put("checkIns", FieldValue.arrayUnion(Timestamp.now()));
+                db.update("tickets", result.getContents(), checkIn, 1);
             }
         }
     }

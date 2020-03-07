@@ -9,6 +9,15 @@
         android:id="@+id/myevents_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Events" />
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:text="My Events"
+        android:textSize="32sp"/>
+
+    <ListView
+        android:id="@+id/eventsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp" />
 
 </FrameLayout>
