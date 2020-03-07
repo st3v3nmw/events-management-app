@@ -33,14 +33,16 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         event_locationView.setText(event.location);
         banner_image.setImageBitmap(event.imageBitmap);
 
+        final View finalConvertView = convertView;
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        convertView.setOnClickListener(new View.OnClickListener() {
+        finalConvertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BookEventBottomSheet bookEventBottomSheet = new BookEventBottomSheet(event.name, mAuth.getUid(), event.eventId);
                 bookEventBottomSheet.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "Book Event");
             }
         });
+
         return convertView;
     }
 }

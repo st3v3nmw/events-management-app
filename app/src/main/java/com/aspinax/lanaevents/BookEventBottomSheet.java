@@ -5,11 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +16,12 @@ import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class BookEventBottomSheet extends BottomSheetDialogFragment {
     private String event_name, userId, eventId;
     private Database db;
+
     public BookEventBottomSheet(String event, String userId, String eventId) {
         this.event_name = event;
         this.userId = userId;
@@ -34,17 +31,6 @@ public class BookEventBottomSheet extends BottomSheetDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = new Database(new AsyncResponse() {
-            @Override
-            public void resultHandler(Map<String, Object> result, int resultCode) {
-
-            }
-
-            @Override
-            public void resultHandler(String msg, int resultCode) {
-                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     @Override
@@ -53,16 +39,43 @@ public class BookEventBottomSheet extends BottomSheetDialogFragment {
         TextView event_namebsView = contentView.findViewById(R.id.event_namebs);
         event_namebsView.setText(this.event_name);
         dialog.setContentView(contentView);
-        MaterialButton book = contentView.findViewById(R.id.book_btn);
-        book.setOnClickListener(new View.OnClickListener() {
+        final MaterialButton book = contentView.findViewById(R.id.book_btn);
+
+        db = new Database(new AsyncResponse() {
             @Override
-            public void onClick(View v) {
-                Map<String, Object> data = new HashMap<>();
-                data.put("eventId", BookEventBottomSheet.this.eventId);
-                data.put("userId", BookEventBottomSheet.this.userId);
-                data.put("createdAt", FieldValue.serverTimestamp());
-                db.add("tickets", data, 0);
+            public void resultHandler(Map<String, Object> result, int resultCode) {
+                if (resultCode == 0) {
+                    if (result.isEmpty()) {
+                        book.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("eventId", BookEventBottomSheet.this.eventId);
+                                data.put("userId", BookEventBottomSheet.this.userId);
+                                data.put("createdAt", FieldValue.serverTimestamp());
+                                db.add("tickets", data, 1);
+                            }
+                        });
+                    } else {
+                        markAsBooked(book);
+                    }
+                }
+            }
+
+            @Override
+            public void resultHandler(String msg, int resultCode) {
+                if (resultCode == 1) {
+                    markAsBooked(book);
+                } else {
+                     Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+                 }
             }
         });
+        db.filterWithTwoFields("tickets", "userId", this.userId, "eventId", this.eventId, Ticket.class, 0);
+    }
+
+    private void markAsBooked(MaterialButton book) {
+        book.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+        book.setText("Booked");
     }
 }

@@ -57,7 +57,7 @@ public class Person {
     }
 
     public void updateProfile(Map<String, Object> data) {
-        this.db.update("users", this.auth.getUid(), data);
+        this.db.update("users", this.auth.getUid(), data, 0);
     }
 
     public static void saveUser(FirebaseAuth auth, String fullname, String email, FieldValue created) {
