@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Person {
-    public String fName, lName, email;
+    public String fName, lName, email, organization;
     public Integer access;
     public Timestamp created;
     private FirebaseAuth auth;
@@ -24,12 +24,13 @@ public class Person {
     });
 
     public Person() {}
-    public Person(String fName, String lName, String email, Timestamp created, Integer access) {
+    public Person(String fName, String lName, String email, Timestamp created, Integer access, String organization) {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
         this.created = created;
         this.access = access;
+        this.organization = organization;
     }
 
     public void setAuth(FirebaseAuth auth) {
@@ -54,6 +55,10 @@ public class Person {
 
     public void setAccess(Integer access) {
         this.access = access;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
     public void updateProfile(Map<String, Object> data) {

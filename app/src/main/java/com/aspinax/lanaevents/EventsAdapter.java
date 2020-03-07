@@ -2,15 +2,12 @@ package com.aspinax.lanaevents;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.fragment.app.FragmentActivity;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -34,12 +31,23 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         banner_image.setImageBitmap(event.imageBitmap);
 
         final View finalConvertView = convertView;
-        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         finalConvertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookEventBottomSheet bookEventBottomSheet = new BookEventBottomSheet(event.name, mAuth.getUid(), event.eventId);
-                bookEventBottomSheet.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "Book Event");
+                Intent intent = new Intent(getContext(), ViewEventActivity.class);
+                intent.putExtra("eventId", event.eventId);
+                intent.putExtra("name", event.name);
+                intent.putExtra("attendeeCount", event.attendeeCount);
+                intent.putExtra("end", event.end.getSeconds());
+                intent.putExtra("location", event.location);
+                intent.putExtra("orgId", event.orgId);
+                intent.putExtra("start", event.start.getSeconds());
+                intent.putExtra("type", event.type);
+                intent.putExtra("image", event.image);
+                intent.putExtra("hearts", event.hearts);
+                intent.putExtra("addedBy", event.addedBy);
+                intent.putExtra("checkInCount", event.checkInCount);
+                getContext().startActivity(intent);
             }
         });
 
