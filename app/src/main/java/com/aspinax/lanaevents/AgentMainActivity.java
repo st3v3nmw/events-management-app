@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -36,7 +35,7 @@ public class AgentMainActivity extends AppCompatActivity {
                 switch (resultCode) {
                     case 0:
                         p = (Agent) result.get(mAuth.getUid());
-                        Toast.makeText(getApplicationContext(), p.orgId, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), p.organization, Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -44,7 +43,13 @@ public class AgentMainActivity extends AppCompatActivity {
             @Override
             public void resultHandler(String msg, int resultCode) {
                 if (resultCode == 1) {
-
+                    AlertDialog checkInDialog = new AlertDialog();
+                    checkInDialog.showDialog(AgentMainActivity.this, msg, true);
+                    if (msg.equals("Success")) {
+                        checkInDialog.showDialog(AgentMainActivity.this, "Check In Successful", false);
+                    } else {
+                        checkInDialog.showDialog(AgentMainActivity.this, "Check In Failed", true);
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 }
@@ -98,8 +103,9 @@ public class AgentMainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Scan Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 Map<String, Object> checkIn = new HashMap<>();
-                checkIn.put("checkIns", FieldValue.arrayUnion(Timestamp.now()));
-                db.update("tickets", result.getContents(), checkIn, 1);
+                checkIn.put("checkInBy", mAuth.getUid());
+                checkIn.put("time", FieldValue.serverTimestamp());
+                db.addToSubCollection("tickets", result.getContents(), "checkIns", checkIn, 1);
             }
         }
     }

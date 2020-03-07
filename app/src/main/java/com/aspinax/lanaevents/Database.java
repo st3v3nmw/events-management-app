@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -45,8 +46,8 @@ public class Database {
     }
 
     // CREATE with auto id
-    public void add(String collectionName, Map data, final int resultCode) {
-        db.collection(collectionName)
+    public void addC(CollectionReference collection, Map data, final int resultCode) {
+        collection
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -60,6 +61,17 @@ public class Database {
                         response.resultHandler(e.toString(), resultCode);
                     }
                 });
+    }
+
+    public void add(String collectionName, Map data, int resultCode) {
+        addC(db.collection(collectionName), data, resultCode);
+    }
+
+    public void addToSubCollection(String collectionName, String docId, String subName, Map data, int resultCode) {
+        CollectionReference collection = db.collection(collectionName)
+                .document(docId)
+                .collection(subName);
+        addC(collection, data, resultCode);
     }
 
     // QUERY
