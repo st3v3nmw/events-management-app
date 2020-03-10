@@ -32,6 +32,7 @@ public class UserEventsFragment extends Fragment {
                     List<Ticket> ticketList = new ArrayList<>();
                     for (String ticketId: result.keySet()) {
                         Ticket ticket = (Ticket) result.get(ticketId);
+                        assert ticket != null;
                         ticket.setTicketId(ticketId);
                         ticketList.add(ticket);
                     }

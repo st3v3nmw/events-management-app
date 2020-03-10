@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -38,12 +42,27 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:hint="@string/fname"
+            android:hint="First Name"
             android:theme="@style/TextInputLayoutStyle">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/full_name"
+                android:id="@+id/fName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="350dp"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:theme="@style/TextInputLayoutStyle">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -58,6 +77,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Phone Number"
+            android:theme="@style/TextInputLayoutStyle">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="350dp"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:hint="Organization"
+            android:theme="@style/TextInputLayoutStyle">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/organizationName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -80,8 +126,10 @@
             android:layout_width="350dp"
             android:layout_height="64dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
             android:text="@string/cntn"
             app:backgroundTint="#00bbff"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
