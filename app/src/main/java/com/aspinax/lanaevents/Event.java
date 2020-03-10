@@ -2,6 +2,8 @@ package com.aspinax.lanaevents;
 
 import android.graphics.Bitmap;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.Timestamp;
 
 import static com.aspinax.lanaevents.UserMainActivity.decodeBase64;

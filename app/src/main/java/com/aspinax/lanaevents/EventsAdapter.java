@@ -1,37 +1,65 @@
 package com.aspinax.lanaevents;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class EventsAdapter extends ArrayAdapter<Event> {
-    EventsAdapter(Context context, List<Event> object) {
-        super(context, 0, object);
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+
+public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView event_nameView, startView;
+        ImageView banner_image;
+
+        ViewHolder(View convertView) {
+            super(convertView);
+            event_nameView = convertView.findViewById(R.id.event_name);
+            startView = convertView.findViewById(R.id.event_start);
+            banner_image = convertView.findViewById(R.id.banner_image);
+        }
+    }
+
+    private List<Event> eventList;
+    private Context mContext;
+
+    EventsAdapter(Context context, List<Event> eventList) {
+        this.eventList = eventList;
+        this.mContext = context;
+    }
+
+    private Context getContext() {
+        return mContext;
+    }
+
+    @NonNull
+    @Override
+    public EventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View eItemView = inflater.inflate(R.layout.item_event, parent, false);
+        return new ViewHolder(eItemView);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.item_event, parent, false);
-        }
-        TextView event_nameView = convertView.findViewById(R.id.event_name);
-        TextView event_locationView = convertView.findViewById(R.id.event_location);
-        ImageView banner_image = convertView.findViewById(R.id.banner_image);
-        final Event event = getItem(position);
+    public void onBindViewHolder(EventsAdapter.ViewHolder viewHolder, int position) {
+        final Event event = eventList.get(position);
         assert event != null;
-        event_nameView.setText(event.name);
-        event_locationView.setText(event.location);
-        banner_image.setImageBitmap(event.imageBitmap);
+        viewHolder.event_nameView.setText(event.name);
+        SimpleDateFormat startDate = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+        viewHolder.startView.setText(startDate.format(event.start.toDate()));
+        viewHolder.banner_image.setImageBitmap(event.imageBitmap);
 
-        final View finalConvertView = convertView;
-        finalConvertView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.banner_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ViewEventActivity.class);
@@ -50,7 +78,10 @@ public class EventsAdapter extends ArrayAdapter<Event> {
                 getContext().startActivity(intent);
             }
         });
+    }
 
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return eventList.size();
     }
 }
