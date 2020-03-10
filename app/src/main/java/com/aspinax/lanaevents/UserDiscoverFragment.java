@@ -3,11 +3,12 @@ package com.aspinax.lanaevents;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,9 +34,17 @@ public class UserDiscoverFragment extends Fragment {
                         event.setEventId(eventId);
                         eventList.add(event);
                     }
-                    ListView eventsListView = view.findViewById(R.id.eventsList);
-                    EventsAdapter eventsAdapter = new EventsAdapter(getContext(), eventList);
-                    eventsListView.setAdapter(eventsAdapter);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    RecyclerView eventsListView = view.findViewById(R.id.eventsList);
+                    eventsListView.setLayoutManager(layoutManager);
+                    LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    RecyclerView  nearbyEventsListView = view.findViewById(R.id.nearbyEventsList);
+                    nearbyEventsListView.setLayoutManager(layoutManager2);
+                    if (getContext() != null) {
+                        EventsAdapter eventsAdapter = new EventsAdapter(getContext(), eventList);
+                        eventsListView.setAdapter(eventsAdapter);
+                        nearbyEventsListView.setAdapter(eventsAdapter);
+                    }
                 }
             }
 

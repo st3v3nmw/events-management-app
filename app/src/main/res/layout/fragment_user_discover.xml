@@ -3,21 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserDiscoverFragment">
 
     <TextView
-        android:id="@+id/discover_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
         android:text="Discover"
-        android:textSize="32sp"/>
+        android:textSize="30sp"/>
 
-    <ListView
-        android:id="@+id/eventsList"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginTop="65dp"
+        android:layout_marginLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:startIconDrawable="@drawable/ic_search"
+        app:startIconContentDescription="TODO">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="140dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:text="Popular Events"
+        android:textSize="24sp"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="375dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:text="Nearby Events"
+        android:textSize="24sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/nearbyEventsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="405dp"
+        android:layout_marginLeft="20dp" />
 </FrameLayout>

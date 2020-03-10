@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ViewEventActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
     <ImageView
         android:id="@+id/back"
@@ -41,7 +46,7 @@
     <LinearLayout
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/from">
         <com.google.android.material.button.MaterialButton
@@ -58,6 +63,8 @@
             app:backgroundTint="#00bbff"/>
 
         <TextView
+            android:visibility="gone"
+            android:id="@+id/here_your"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -69,6 +76,8 @@
             android:text="Here's your ticket 🎉\uDF89," />
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ticket_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -109,5 +118,16 @@
             android:fontFamily="@font/montserrat"
             android:text="Location" />
 
+        <com.mapbox.mapboxsdk.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="50dp"
+            mapbox:mapbox_cameraTargetLat="-1.272550"
+            mapbox:mapbox_cameraTargetLng="36.807337"
+            mapbox:mapbox_cameraZoom="16" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

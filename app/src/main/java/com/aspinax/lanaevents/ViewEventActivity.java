@@ -1,5 +1,6 @@
 package com.aspinax.lanaevents;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,15 +28,26 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.mapbox.mapboxsdk.maps.Style;
+
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
 public class ViewEventActivity extends AppCompatActivity {
     private Database db;
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Mapbox.getInstance(this, "pk.eyJ1Ijoic3QzdjNubXciLCJhIjoiY2s3bHh5OG42MGM1aDNrcDZyNXlkZXB2NCJ9.QjrMAZJvETZJAQHC8-0tsw");
         setContentView(R.layout.activity_view_event);
 
         Intent intent = getIntent();
@@ -58,6 +71,32 @@ public class ViewEventActivity extends AppCompatActivity {
         TextView fromView = findViewById(R.id.from);
         SimpleDateFormat startDate = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
         fromView.setText(startDate.format(event.start.toDate()));
+
+        ImageView backBtn = findViewById(R.id.back);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        mapView = findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(@NonNull final MapboxMap mapboxMap) {
+                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                    @Override
+                    public void onStyleLoaded(@NonNull Style style) {
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-1.272550, 36.807337))
+                                .icon(IconFactory.getInstance(ViewEventActivity.this).fromResource(R.drawable.ic_map_pin))
+                        );
+                    }
+                });
+            }
+        });
+
 
         final MaterialButton book = findViewById(R.id.book_btn);
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -87,6 +126,10 @@ public class ViewEventActivity extends AppCompatActivity {
                         t.setTicketId(ticketId);
                         TextView ticketIdView = findViewById(R.id.ticketId);
                         ticketIdView.setText("# " + t.ticketId);
+                        TextView hereView = findViewById(R.id.here_your);
+                        hereView.setVisibility(View.VISIBLE);
+                        LinearLayout ticketGroupView = findViewById(R.id.ticket_group);
+                        ticketGroupView.setVisibility(View.VISIBLE);
                         ImageView qrCodeView = findViewById(R.id.ticketQR);
                         try {
                             Bitmap qrBitMap = encodeAsBitmap(t.ticketId);
@@ -137,4 +180,47 @@ public class ViewEventActivity extends AppCompatActivity {
         bitmap.setPixels(pixels, 0, 200, 0, 0, w, h);
         return bitmap;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
 }
