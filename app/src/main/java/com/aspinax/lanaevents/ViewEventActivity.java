@@ -3,6 +3,7 @@ package com.aspinax.lanaevents;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,7 +21,9 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.graphics.Color.BLACK;
@@ -52,11 +55,15 @@ public class ViewEventActivity extends AppCompatActivity {
         event.setEventId(eventId);
         TextView eventNameView = findViewById(R.id.event_name);
         eventNameView.setText(event.name);
+        TextView fromView = findViewById(R.id.from);
+        SimpleDateFormat startDate = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+        fromView.setText(startDate.format(event.start.toDate()));
 
         final MaterialButton book = findViewById(R.id.book_btn);
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         db = new Database(new AsyncResponse() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void resultHandler(Map<String, Object> result, int resultCode) {
                 if (resultCode == 0) {
@@ -76,6 +83,7 @@ public class ViewEventActivity extends AppCompatActivity {
                         markAsBooked(book);
                         String ticketId = (String) result.keySet().toArray()[0];
                         Ticket t = (Ticket) result.get(ticketId);
+                        assert t != null;
                         t.setTicketId(ticketId);
                         TextView ticketIdView = findViewById(R.id.ticketId);
                         ticketIdView.setText("# " + t.ticketId);
@@ -83,7 +91,7 @@ public class ViewEventActivity extends AppCompatActivity {
                         try {
                             Bitmap qrBitMap = encodeAsBitmap(t.ticketId);
                             if(qrBitMap != null) qrCodeView.setImageBitmap(qrBitMap);
-                        } catch (WriterException e) { }
+                        } catch (WriterException ignored) { }
                     }
                 }
             }

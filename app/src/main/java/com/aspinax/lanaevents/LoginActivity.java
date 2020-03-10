@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private Database db;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (resultCode == 0) {
                     Person p = (Person) result.get(mAuth.getUid());
                     Intent intent;
+                    assert p != null;
                     if (p.access > 0) intent = new Intent(LoginActivity.this, AgentMainActivity.class);
                     else intent = new Intent(LoginActivity.this, UserMainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -57,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String email = emailView.getText().toString().trim();
-                final String password = passwordView.getText().toString().trim();
+                final String email = Objects.requireNonNull(emailView.getText()).toString().trim();
+                final String password = Objects.requireNonNull(passwordView.getText()).toString().trim();
 
                 if (isValidEmail(email)) {
                     if (isValidPassword(password)) {

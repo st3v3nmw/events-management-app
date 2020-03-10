@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Person {
-    public String fName, lName, email, organization;
+    public String fName, lName, email, organization, phoneNumber;
     public Integer access;
     public Timestamp created;
     private FirebaseAuth auth;
@@ -24,13 +24,14 @@ public class Person {
     });
 
     public Person() {}
-    public Person(String fName, String lName, String email, Timestamp created, Integer access, String organization) {
+    public Person(String fName, String lName, String email, Timestamp created, Integer access, String phoneNumber, String organization) {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
         this.created = created;
         this.access = access;
         this.organization = organization;
+        this.phoneNumber = phoneNumber;
     }
 
     public void setAuth(FirebaseAuth auth) {
@@ -61,19 +62,24 @@ public class Person {
         this.organization = organization;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public void updateProfile(Map<String, Object> data) {
         this.db.update("users", this.auth.getUid(), data, 0);
     }
 
-    public static void saveUser(FirebaseAuth auth, String fullname, String email, FieldValue created) {
+    static void saveUser(FirebaseAuth auth, String fName, String lName, String email, String phoneNumber, String orgName, FieldValue created) {
         FirebaseUser user = auth.getCurrentUser();
-        String[] names = fullname.split(" ");
         Map<String, Object> data = new HashMap<>();
-        data.put("fName", names[0]);
-        data.put("lName", names[1]);
+        data.put("fName", fName);
+        data.put("lName", lName);
         data.put("email", email);
         data.put("created", created);
         data.put("access", 0);
+        data.put("phoneNumber", phoneNumber);
+        data.put("organization", orgName);
 
         Database db = new Database(new AsyncResponse() {
             @Override
@@ -84,6 +90,7 @@ public class Person {
 
             }
         });
+        assert user != null;
         db.set("users", user.getUid(), data, 0);
     }
 }

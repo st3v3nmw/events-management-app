@@ -3,7 +3,6 @@ package com.aspinax.lanaevents;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 public class MyEventsAdapter extends ArrayAdapter<Ticket> {
     private Database db;
-    public MyEventsAdapter(Context context, List<Ticket> object) {
+    MyEventsAdapter(Context context, List<Ticket> object) {
         super(context, 0, object);
     }
 

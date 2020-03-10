@@ -31,16 +31,15 @@ public class UserMainActivity extends AppCompatActivity {
         db = new Database(new AsyncResponse() {
             @Override
             public void resultHandler(Map<String, Object> result, int resultCode) {
-                switch(resultCode) {
-                    case 0:
-                        p = (Person) result.get(mAuth.getUid());
-                        if (p.access > 0) {
-                            Intent intent = new Intent(UserMainActivity.this, AgentMainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
-                        p.setAuth(mAuth);
-                        break;
+                if (resultCode == 0) {
+                    p = (Person) result.get(mAuth.getUid());
+                    assert p != null;
+                    if (p.access > 0) {
+                        Intent intent = new Intent(UserMainActivity.this, AgentMainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                    p.setAuth(mAuth);
                 }
             }
 

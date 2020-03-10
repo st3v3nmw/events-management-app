@@ -32,11 +32,9 @@ public class AgentMainActivity extends AppCompatActivity {
         db = new Database(new AsyncResponse() {
             @Override
             public void resultHandler(Map<String, Object> result, int resultCode) {
-                switch (resultCode) {
-                    case 0:
-                        p = (Agent) result.get(mAuth.getUid());
-                        Toast.makeText(getApplicationContext(), p.organization, Toast.LENGTH_LONG).show();
-                        break;
+                if (resultCode == 0) {
+                    p = (Agent) result.get(mAuth.getUid());
+                    Toast.makeText(getApplicationContext(), p.organization, Toast.LENGTH_LONG).show();
                 }
             }
 

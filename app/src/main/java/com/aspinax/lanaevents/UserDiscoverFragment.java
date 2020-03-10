@@ -29,6 +29,7 @@ public class UserDiscoverFragment extends Fragment {
                     List<Event> eventList = new ArrayList<>();
                     for (String eventId: result.keySet()) {
                         Event event = (Event) result.get(eventId);
+                        assert event != null;
                         event.setEventId(eventId);
                         eventList.add(event);
                     }

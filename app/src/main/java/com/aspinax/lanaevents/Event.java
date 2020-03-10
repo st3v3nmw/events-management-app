@@ -1,7 +1,6 @@
 package com.aspinax.lanaevents;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.google.firebase.Timestamp;
 
@@ -15,7 +14,7 @@ public class Event {
     public Bitmap imageBitmap;
 
     public Event() {}
-    public Event(String addedBy, int attendeeCount, int checkInCount, Timestamp end, int hearts, String image, String location, String name, String orgId, boolean posted, Timestamp start, int type) {
+    Event(String addedBy, int attendeeCount, int checkInCount, Timestamp end, int hearts, String image, String location, String name, String orgId, boolean posted, Timestamp start, int type) {
         this.addedBy = addedBy;
         this.attendeeCount = attendeeCount;
         this.checkInCount = checkInCount;

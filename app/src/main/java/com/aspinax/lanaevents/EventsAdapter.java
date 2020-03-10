@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
-    public EventsAdapter(Context context, List<Event> object) {
+    EventsAdapter(Context context, List<Event> object) {
         super(context, 0, object);
     }
 
