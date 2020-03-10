@@ -9,15 +9,45 @@
         android:id="@+id/myevents_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:text="My Events"
-        android:textSize="32sp"/>
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:textSize="30sp"/>
 
-    <ListView
-        android:id="@+id/eventsList"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="75dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:text="Upcoming Events"
+        android:textSize="24sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="340dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:text="Past Events"
+        android:textSize="24sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pastEventsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="380dp"
+        android:layout_marginLeft="20dp" />
 
 </FrameLayout>

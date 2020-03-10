@@ -60,11 +60,10 @@ public class ViewEventActivity extends AppCompatActivity {
         long start = intent.getLongExtra("start", 0);
         int type = intent.getIntExtra("type", 0);
         String image = intent.getStringExtra("image");
-        int hearts = intent.getIntExtra("hearts", 0);
         int checkInCount = intent.getIntExtra("checkInCount", 0);
         String addedBy = intent.getStringExtra("addedBy");
 
-        final Event event = new Event(addedBy, attendeeCount, checkInCount, new Timestamp(end, 0), hearts, image, location, name, orgId, true,  new Timestamp(start, 0), type);
+        final Event event = new Event(addedBy, attendeeCount, checkInCount, new Timestamp(end, 0), image, location, name, orgId, true,  new Timestamp(start, 0), type);
         event.setEventId(eventId);
         TextView eventNameView = findViewById(R.id.event_name);
         eventNameView.setText(event.name);
@@ -114,6 +113,7 @@ public class ViewEventActivity extends AppCompatActivity {
                                 data.put("eventId", event.eventId);
                                 data.put("userId", mAuth.getUid());
                                 data.put("createdAt", FieldValue.serverTimestamp());
+                                data.put("end", event.end);
                                 book.setOnClickListener(null);
                                 db.add("tickets", data, 1);
                             }
