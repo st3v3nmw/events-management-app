@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView event_nameView, startView;
         ImageView banner_image;
@@ -72,7 +71,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 intent.putExtra("start", event.start.getSeconds());
                 intent.putExtra("type", event.type);
                 intent.putExtra("image", event.image);
-                intent.putExtra("hearts", event.hearts);
                 intent.putExtra("addedBy", event.addedBy);
                 intent.putExtra("checkInCount", event.checkInCount);
                 getContext().startActivity(intent);

@@ -174,6 +174,22 @@ public class Database {
         query(q, className, resultCode);
     }
 
+    // FILTER, 3
+    void filterWithOneFieldAndCompareGreater(String collectionName, String field1, Object filter1, String field2, Object filter2, Class<?> className, int resultCode) {
+        Query q = db.collection(collectionName)
+                .whereEqualTo(field1, filter1)
+                .whereGreaterThan(field2, filter2);
+        query(q, className, resultCode);
+    }
+
+    // FILTER, 4
+    void filterWithOneFieldAndCompareLess(String collectionName, String field1, Object filter1, String field2, Object filter2, Class<?> className, int resultCode) {
+        Query q = db.collection(collectionName)
+                .whereEqualTo(field1, filter1)
+                .whereLessThan(field2, filter2);
+        query(q, className, resultCode);
+    }
+
     // UPDATE
     void update(String collectionName, String docId, Map<String, Object> data, final int resultCode) {
         db.collection(collectionName).document(docId)

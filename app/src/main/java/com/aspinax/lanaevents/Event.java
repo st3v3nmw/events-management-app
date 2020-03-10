@@ -2,26 +2,23 @@ package com.aspinax.lanaevents;
 
 import android.graphics.Bitmap;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.Timestamp;
 
 import static com.aspinax.lanaevents.UserMainActivity.decodeBase64;
 
 public class Event {
     public String addedBy, eventId, location, name, orgId, image;
-    public int attendeeCount, checkInCount, hearts, type;
+    public int attendeeCount, checkInCount, type;
     public Timestamp start, end;
     public boolean posted;
     public Bitmap imageBitmap;
 
     public Event() {}
-    Event(String addedBy, int attendeeCount, int checkInCount, Timestamp end, int hearts, String image, String location, String name, String orgId, boolean posted, Timestamp start, int type) {
+    Event(String addedBy, int attendeeCount, int checkInCount, Timestamp end, String image, String location, String name, String orgId, boolean posted, Timestamp start, int type) {
         this.addedBy = addedBy;
         this.attendeeCount = attendeeCount;
         this.checkInCount = checkInCount;
         this.end = end;
-        this.hearts = hearts;
         this.location = location;
         this.name = name;
         this.orgId = orgId;
@@ -29,7 +26,7 @@ public class Event {
         this.start = start;
         this.type = type;
         this.image = image;
-        this.imageBitmap = decodeBase64(image);
+        this.imageBitmap = Bitmap.createScaledBitmap(decodeBase64(image), 720, 430, true);
     }
 
     public void setEventId(String eventId) {
@@ -62,10 +59,6 @@ public class Event {
 
     public void setOrgId(String orgId) {
         this.orgId = orgId;
-    }
-
-    public void setHearts(int hearts) {
-        this.hearts = hearts;
     }
 
     public void setType(int type) {

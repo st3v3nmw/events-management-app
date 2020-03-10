@@ -3,47 +3,73 @@ package com.aspinax.lanaevents;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class MyEventsAdapter extends ArrayAdapter<Ticket> {
+public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHolder> {
     private Database db;
-    MyEventsAdapter(Context context, List<Ticket> object) {
-        super(context, 0, object);
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView event_nameView, startView;
+        ImageView banner_image;
+
+        ViewHolder(View convertView) {
+            super(convertView);
+            event_nameView = convertView.findViewById(R.id.event_name);
+            startView = convertView.findViewById(R.id.event_start);
+            banner_image = convertView.findViewById(R.id.banner_image);
+        }
+    }
+
+    private List<Ticket> ticketList;
+    private Context mContext;
+
+    MyEventsAdapter(Context context, List<Ticket> ticketList) {
+        this.ticketList = ticketList;
+        this.mContext = context;
+    }
+
+    private Context getContext() {
+        return mContext;
+    }
+
+    @NonNull
+    @Override
+    public MyEventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View eItemView = inflater.inflate(R.layout.item_event, parent, false);
+        return new ViewHolder(eItemView);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.item_event, parent, false);
-        }
-
-        final TextView event_nameView = convertView.findViewById(R.id.event_name);
-        final TextView event_locationView = convertView.findViewById(R.id.event_location);
-        final ImageView banner_image = convertView.findViewById(R.id.banner_image);
-
-        final Ticket ticket = getItem(position);
+    public void onBindViewHolder(final MyEventsAdapter.ViewHolder viewHolder, int position) {
+        final Ticket ticket = ticketList.get(position);
         assert ticket != null;
-
-        final View finalConvertView = convertView;
         db = new Database(new AsyncResponse() {
             @Override
             public void resultHandler(Map<String, Object> result, int resultCode) {
                 if (resultCode == 0) {
                     final Event event = (Event) result.get(ticket.eventId);
                     assert event != null;
-                    event_nameView.setText(event.name);
-                    event_locationView.setText(event.location);
-                    banner_image.setImageBitmap(event.imageBitmap);
+                    viewHolder.event_nameView.setText(event.name);
+                    SimpleDateFormat startDate = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+                    viewHolder.startView.setText(startDate.format(event.start.toDate()));
+                    viewHolder.banner_image.setImageBitmap(event.imageBitmap);
 
-                    finalConvertView.setOnClickListener(new View.OnClickListener() {
+                    viewHolder.banner_image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getContext(), ViewEventActivity.class);
@@ -56,7 +82,6 @@ public class MyEventsAdapter extends ArrayAdapter<Ticket> {
                             intent.putExtra("start", event.start.getSeconds());
                             intent.putExtra("type", event.type);
                             intent.putExtra("image", event.image);
-                            intent.putExtra("hearts", event.hearts);
                             intent.putExtra("addedBy", event.addedBy);
                             intent.putExtra("checkInCount", event.checkInCount);
                             getContext().startActivity(intent);
@@ -67,11 +92,15 @@ public class MyEventsAdapter extends ArrayAdapter<Ticket> {
 
             @Override
             public void resultHandler(String msg, int resultCode) {
-                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+
             }
         });
 
         db.read("events", ticket.eventId, Event.class, 0);
-        return convertView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return ticketList.size();
     }
 }
