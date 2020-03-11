@@ -6,19 +6,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static com.aspinax.lanaevents.UserDiscoverFragment.getTodayDate;
 
 public class UserEventsFragment extends Fragment {
     private Database db;
@@ -40,16 +40,19 @@ public class UserEventsFragment extends Fragment {
                     ticketList.add(ticket);
                 }
 
-                MyEventsAdapter eventsAdapter = new MyEventsAdapter(getContext(), ticketList);
                 if (resultCode == 0) {
+                    Collections.sort(ticketList);
+                    MyEventsAdapter eventsAdapter = new MyEventsAdapter(getContext(), ticketList);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                     RecyclerView eventsListView = view.findViewById(R.id.eventsList);
                     eventsListView.setLayoutManager(layoutManager);
                     if (getContext() != null) {
                         eventsListView.setAdapter(eventsAdapter);
                     }
-                    db.filterWithOneFieldAndCompareLess("tickets", "userId", mAuth.getUid(), "end", Timestamp.now(), Ticket.class, 1);
+                    db.filterWithOneFieldAndCompareLess("tickets", "userId", mAuth.getUid(), "end", getTodayDate(), Ticket.class, 1);
                 } else {
+                    Collections.sort(ticketList, Collections.<Ticket>reverseOrder());
+                    MyEventsAdapter eventsAdapter = new MyEventsAdapter(getContext(), ticketList);
                     LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                     RecyclerView  pastEventsListView = view.findViewById(R.id.pastEventsList);
                     pastEventsListView.setLayoutManager(layoutManager2);
@@ -65,7 +68,7 @@ public class UserEventsFragment extends Fragment {
             }
         });
 
-        db.filterWithOneFieldAndCompareGreater("tickets", "userId", mAuth.getUid(), "end", Timestamp.now(), Ticket.class,0);
+        db.filterWithOneFieldAndCompareGreater("tickets", "userId", mAuth.getUid(), "end", getTodayDate(), Ticket.class,0);
         return view;
     }
 }

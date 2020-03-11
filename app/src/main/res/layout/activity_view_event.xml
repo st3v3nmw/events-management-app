@@ -49,18 +49,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/from">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/book_btn"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="125dp"
-            android:layout_height="55dp"
+        <LinearLayout
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="20dp"
-            android:text="Book"
-            app:icon="@drawable/ic_heart"
-            app:iconSize="24dp"
-            android:fontFamily="@font/montserrat"
-            app:backgroundTint="#00bbff"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/book_btn"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="125dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="20dp"
+                android:text="Book"
+                app:icon="@drawable/ic_heart"
+                app:iconSize="24dp"
+                android:fontFamily="@font/montserrat"
+                app:backgroundTint="#00bbff"/>
+
+            <TextView
+                android:id="@+id/attendee_count"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"
+                android:paddingRight="20dp"
+                android:textSize="18sp"
+                android:gravity="right"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:visibility="gone"

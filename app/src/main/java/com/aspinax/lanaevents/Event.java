@@ -6,7 +6,7 @@ import com.google.firebase.Timestamp;
 
 import static com.aspinax.lanaevents.UserMainActivity.decodeBase64;
 
-public class Event {
+public class Event implements Comparable<Event> {
     public String addedBy, eventId, location, name, orgId, image;
     public int attendeeCount, checkInCount, type;
     public Timestamp start, end;
@@ -76,5 +76,10 @@ public class Event {
     public void setImage(String image) {
         this.image = image;
         this.imageBitmap = decodeBase64(image);
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        return Long.compare(this.end.getSeconds(), o.end.getSeconds());
     }
 }

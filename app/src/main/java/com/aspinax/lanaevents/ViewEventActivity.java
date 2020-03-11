@@ -40,10 +40,13 @@ import com.mapbox.mapboxsdk.maps.Style;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
+import static com.aspinax.lanaevents.UserDiscoverFragment.getTodayDate;
+
 public class ViewEventActivity extends AppCompatActivity {
     private Database db;
     private MapView mapView;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,9 @@ public class ViewEventActivity extends AppCompatActivity {
         TextView fromView = findViewById(R.id.from);
         SimpleDateFormat startDate = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
         fromView.setText(startDate.format(event.start.toDate()));
+        final TextView countView = findViewById(R.id.attendee_count);
+        if (event.end.getSeconds() < getTodayDate().getTime()/1000L) countView.setText(event.attendeeCount + " went");
+        countView.setText(event.attendeeCount + " going");
 
         ImageView backBtn = findViewById(R.id.back);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,13 +115,17 @@ public class ViewEventActivity extends AppCompatActivity {
                         book.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Map<String, Object> data = new HashMap<>();
-                                data.put("eventId", event.eventId);
-                                data.put("userId", mAuth.getUid());
-                                data.put("createdAt", FieldValue.serverTimestamp());
-                                data.put("end", event.end);
-                                book.setOnClickListener(null);
-                                db.add("tickets", data, 1);
+                                if (event.end.getSeconds() < getTodayDate().getTime()/1000L) {
+                                    Toast.makeText(getApplicationContext(), "The deadline to book has passed", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put("eventId", event.eventId);
+                                    data.put("userId", mAuth.getUid());
+                                    data.put("createdAt", FieldValue.serverTimestamp());
+                                    data.put("end", event.end);
+                                    book.setOnClickListener(null);
+                                    db.add("tickets", data, 1);
+                                }
                             }
                         });
                     } else {
@@ -143,7 +153,11 @@ public class ViewEventActivity extends AppCompatActivity {
             public void resultHandler(String msg, int resultCode) {
                 if (resultCode == 1) {
                     markAsBooked(book);
+                    db.increment("events", event.eventId, "attendeeCount", 1, 2);
                     db.filterWithTwoFields("tickets", "userId", mAuth.getUid(), "eventId", event.eventId, Ticket.class, 0);
+                } else if (resultCode == 2){
+                    event.attendeeCount += 1;
+                    countView.setText(event.attendeeCount + " going");
                 } else {
                     Toast.makeText(ViewEventActivity.this, msg, Toast.LENGTH_LONG).show();
                 }
@@ -222,5 +236,4 @@ public class ViewEventActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
-
 }
