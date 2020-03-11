@@ -12,33 +12,36 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class UserDiscoverFragment extends Fragment {
-    private Database db;
     public UserDiscoverFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_user_discover, container, false);
-        db = new Database(new AsyncResponse() {
+        Database db = new Database(new AsyncResponse() {
             @Override
             public void resultHandler(Map<String, Object> result, int resultCode) {
+                List<Event> eventList = new ArrayList<>();
+                for (String eventId : result.keySet()) {
+                    Event event = (Event) result.get(eventId);
+                    assert event != null;
+                    event.setEventId(eventId);
+                    eventList.add(event);
+                }
                 if (resultCode == 0) {
-                    List<Event> eventList = new ArrayList<>();
-                    for (String eventId: result.keySet()) {
-                        Event event = (Event) result.get(eventId);
-                        assert event != null;
-                        event.setEventId(eventId);
-                        eventList.add(event);
-                    }
+                    Collections.sort(eventList);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                     RecyclerView eventsListView = view.findViewById(R.id.eventsList);
                     eventsListView.setLayoutManager(layoutManager);
                     LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                    RecyclerView  nearbyEventsListView = view.findViewById(R.id.nearbyEventsList);
+                    RecyclerView nearbyEventsListView = view.findViewById(R.id.nearbyEventsList);
                     nearbyEventsListView.setLayoutManager(layoutManager2);
                     if (getContext() != null) {
                         EventsAdapter eventsAdapter = new EventsAdapter(getContext(), eventList);
@@ -53,7 +56,18 @@ public class UserDiscoverFragment extends Fragment {
                 Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
             }
         });
-        db.readCollection("events", Event.class, 0);
+
+        db.compareGreater("events", "end", getTodayDate(), Event.class, 0);
         return view;
+    }
+
+    static Date getTodayDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 }
