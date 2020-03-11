@@ -4,17 +4,20 @@ import android.graphics.Bitmap;
 
 import com.google.firebase.Timestamp;
 
+import java.util.Map;
+
 import static com.aspinax.lanaevents.UserMainActivity.decodeBase64;
 
 public class Event implements Comparable<Event> {
     public String addedBy, eventId, location, name, orgId, image;
+    public Map<String, Double> coordinates;
     public int attendeeCount, checkInCount, type;
     public Timestamp start, end;
     public boolean posted;
     public Bitmap imageBitmap;
 
     public Event() {}
-    Event(String addedBy, int attendeeCount, int checkInCount, Timestamp end, String image, String location, String name, String orgId, boolean posted, Timestamp start, int type) {
+    Event(String addedBy, int attendeeCount, int checkInCount, Timestamp end, String image, String location, String name, String orgId, boolean posted, Timestamp start, int type, Map<String, Double> coordinates) {
         this.addedBy = addedBy;
         this.attendeeCount = attendeeCount;
         this.checkInCount = checkInCount;
@@ -25,6 +28,7 @@ public class Event implements Comparable<Event> {
         this.posted = posted;
         this.start = start;
         this.type = type;
+        this.coordinates = coordinates;
         this.image = image;
         this.imageBitmap = Bitmap.createScaledBitmap(decodeBase64(image), 720, 430, true);
     }
@@ -71,6 +75,10 @@ public class Event implements Comparable<Event> {
 
     public void setPosted(boolean posted) {
         this.posted = posted;
+    }
+
+    public void setCoordinates(Map<String, Double> coordinates) {
+        this.coordinates = coordinates;
     }
 
     public void setImage(String image) {

@@ -73,6 +73,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 intent.putExtra("image", event.image);
                 intent.putExtra("addedBy", event.addedBy);
                 intent.putExtra("checkInCount", event.checkInCount);
+                intent.putExtra("longitude", event.coordinates.get("longitude"));
+                intent.putExtra("latitude", event.coordinates.get("latitude"));
                 getContext().startActivity(intent);
             }
         });
