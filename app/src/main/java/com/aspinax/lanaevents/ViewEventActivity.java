@@ -31,9 +31,11 @@ import java.util.Map;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.MapboxMapOptions;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
@@ -65,8 +67,11 @@ public class ViewEventActivity extends AppCompatActivity {
         String image = intent.getStringExtra("image");
         int checkInCount = intent.getIntExtra("checkInCount", 0);
         String addedBy = intent.getStringExtra("addedBy");
+        Map<String , Double> coordinates = new HashMap<>();
+        coordinates.put("longitude", intent.getDoubleExtra("longitude", 0));
+        coordinates.put("latitude", intent.getDoubleExtra("latitude", 0));
 
-        final Event event = new Event(addedBy, attendeeCount, checkInCount, new Timestamp(end, 0), image, location, name, orgId, true,  new Timestamp(start, 0), type);
+        final Event event = new Event(addedBy, attendeeCount, checkInCount, new Timestamp(end, 0), image, location, name, orgId, true,  new Timestamp(start, 0), type, coordinates);
         event.setEventId(eventId);
         TextView eventNameView = findViewById(R.id.event_name);
         eventNameView.setText(event.name);
@@ -90,11 +95,18 @@ public class ViewEventActivity extends AppCompatActivity {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull final MapboxMap mapboxMap) {
+                mapboxMap.setCameraPosition(new CameraPosition.Builder()
+                        .target(new LatLng(event.coordinates.get("latitude"), event.coordinates.get("longitude")))
+                        .zoom(16)
+                        .build());
+
+                mapboxMap.getUiSettings().setZoomGesturesEnabled(true);
+
                 mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
                         mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-1.272550, 36.807337))
+                                .position(new LatLng(event.coordinates.get("latitude"), event.coordinates.get("longitude")))
                                 .icon(IconFactory.getInstance(ViewEventActivity.this).fromResource(R.drawable.ic_map_pin))
                         );
                     }
