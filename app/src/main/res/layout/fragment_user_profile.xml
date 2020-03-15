@@ -3,8 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserProfileFragment">
+
+    <TextView
+        android:id="@+id/myevents_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Edit Profile"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:textSize="30sp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logout"
@@ -12,6 +24,7 @@
         android:layout_width="wrap_content"
         style="@style/Widget.MaterialComponents.Button.Icon"
         app:backgroundTint="#00bbff"
+        android:layout_marginTop="80dp"
         android:text="Log out" />
 
 </FrameLayout>
