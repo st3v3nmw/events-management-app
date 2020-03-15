@@ -144,6 +144,25 @@
             android:fontFamily="@font/montserrat"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:text="Lineup" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:text="//TODO" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:text="Event Calendar" />
 
         <TextView
