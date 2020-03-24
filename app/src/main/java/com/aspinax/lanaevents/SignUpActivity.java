@@ -65,11 +65,11 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
                 if (TextUtils.isEmpty(phoneNumber)) {
-                    fNameView.setError("Please provide a phone number.");
+                    phoneNumberView.setError("Please provide a phone number.");
                     return;
                 }
                 if (TextUtils.isEmpty(orgName)) {
-                    fNameView.setError("Please provide an organization name.");
+                    orgView.setError("Please provide an organization name.");
                     return;
                 }
 

@@ -75,7 +75,7 @@ public class AgentMainActivity extends AppCompatActivity {
                         integrator.initiateScan();
                         break;
                     case R.id.profile:
-                        AgentProfileFragment profileFragment = new AgentProfileFragment();
+                        ProfileFragment profileFragment = new ProfileFragment();
                         fragmentTransaction.replace(R.id.content, profileFragment);
                         fragmentTransaction.commit();
                         break;
