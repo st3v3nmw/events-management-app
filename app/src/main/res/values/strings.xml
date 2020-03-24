@@ -13,15 +13,12 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="welcome_ill">Happy boy, welcomes</string>
-    <string name="fname">Full Name</string>
+    <string name="fname">First Name</string>
     <string name="email_val">Please provide a valid email address</string>
     <string name="password_val">The password should have 8 or more characters</string>
-    <string name="fname_val">Please provide your full name</string>
+    <string name="fname_val">Please provide your first name</string>
     <string name="signup_failed">Sign up Failed. Check your internet connection and try again.</string>
     <string name="login_failed">Login Failed. Please try again.</string>
     <string name="forgotpass_ill">Forgot Password, thinking&#8230;</string>
     <string name="recovery_instr">Please provide your email address to recover your account.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

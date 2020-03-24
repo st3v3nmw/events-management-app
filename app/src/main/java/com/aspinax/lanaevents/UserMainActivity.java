@@ -65,7 +65,7 @@ public class UserMainActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         break;
                     case R.id.profile:
-                        UserProfileFragment profileFragment = new UserProfileFragment();
+                        ProfileFragment profileFragment = new ProfileFragment();
                         fragmentTransaction.replace(R.id.content, profileFragment);
                         fragmentTransaction.commit();
                         break;
