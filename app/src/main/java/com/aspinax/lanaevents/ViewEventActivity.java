@@ -66,6 +66,7 @@ public class ViewEventActivity extends AppCompatActivity {
         String image = intent.getStringExtra("image");
         int checkInCount = intent.getIntExtra("checkInCount", 0);
         String addedBy = intent.getStringExtra("addedBy");
+
         Map<String , Double> coordinates = new HashMap<>();
         coordinates.put("longitude", intent.getDoubleExtra("longitude", 0));
         coordinates.put("latitude", intent.getDoubleExtra("latitude", 0));
@@ -144,6 +145,7 @@ public class ViewEventActivity extends AppCompatActivity {
                         String ticketId = (String) result.keySet().toArray()[0];
                         Ticket t = (Ticket) result.get(ticketId);
                         assert t != null;
+                        book.setEnabled(true);
                         t.setTicketId(ticketId);
                         TextView ticketIdView = findViewById(R.id.ticketId);
                         ticketIdView.setText("# " + t.ticketId);
