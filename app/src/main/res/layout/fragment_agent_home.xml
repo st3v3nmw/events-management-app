@@ -52,6 +52,7 @@
                     android:id="@+id/event_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="fasdfasdf"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
                 <TextView
                     android:id="@+id/event_location"
@@ -74,6 +75,23 @@
                     style="?attr/borderlessButtonStyle" />
             </LinearLayout>
         </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stats"
+        android:textSize="24sp"
+        android:paddingStart="16dp"
+        android:paddingTop="450dp"
+        tools:ignore="RtlSymmetry" />
+
+    <TextView
+        android:id="@+id/totalCheckIns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="480dp"
+        tools:ignore="RtlSymmetry" />
+
 </FrameLayout>

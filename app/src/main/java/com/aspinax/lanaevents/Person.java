@@ -70,6 +70,10 @@ public class Person {
         this.db.update("users", this.auth.getUid(), data, 0);
     }
 
+    String getFullName() {
+        return fName + " " + lName;
+    }
+
     static void saveUser(FirebaseAuth auth, String fName, String lName, String email, String phoneNumber, String orgName, FieldValue created) {
         FirebaseUser user = auth.getCurrentUser();
         Map<String, Object> data = new HashMap<>();

@@ -34,7 +34,6 @@ public class AgentMainActivity extends AppCompatActivity {
             public void resultHandler(Map<String, Object> result, int resultCode) {
                 if (resultCode == 0) {
                     p = (Agent) result.get(mAuth.getUid());
-                    Toast.makeText(getApplicationContext(), p.organization, Toast.LENGTH_LONG).show();
                 }
             }
 
