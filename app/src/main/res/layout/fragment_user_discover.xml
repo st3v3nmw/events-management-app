@@ -54,11 +54,11 @@
         android:layout_marginTop="375dp"
         android:textColor="@color/black"
         android:fontFamily="@font/montserrat"
-        android:text="Nearby Events"
+        android:text="Past Events"
         android:textSize="24sp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/nearbyEventsList"
+        android:id="@+id/pastEventsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="405dp"

@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -124,20 +125,18 @@ public class ViewEventActivity extends AppCompatActivity {
             public void resultHandler(Map<String, Object> result, int resultCode) {
                 if (resultCode == 0) {
                     if (result.isEmpty()) {
-                        book.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (event.end.getSeconds() < getTodayDate().getTime()/1000L) {
-                                    Toast.makeText(getApplicationContext(), "The deadline to book has passed", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Map<String, Object> data = new HashMap<>();
-                                    data.put("eventId", event.eventId);
-                                    data.put("userId", mAuth.getUid());
-                                    data.put("createdAt", FieldValue.serverTimestamp());
-                                    data.put("end", event.end);
-                                    book.setOnClickListener(null);
-                                    db.add("tickets", data, 1);
-                                }
+                        book.setEnabled(true);
+                        book.setOnClickListener(v -> {
+                            if (event.end.getSeconds() < getTodayDate().getTime()/1000L) {
+                                Toast.makeText(getApplicationContext(), "The deadline to book has passed", Toast.LENGTH_LONG).show();
+                            } else {
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("eventId", event.eventId);
+                                data.put("userId", mAuth.getUid());
+                                data.put("createdAt", FieldValue.serverTimestamp());
+                                data.put("end", event.end);
+                                book.setOnClickListener(null);
+                                db.add("tickets", data, 1);
                             }
                         });
                     } else {

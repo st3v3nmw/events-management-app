@@ -28,25 +28,30 @@ public class UserDiscoverFragment extends Fragment {
         Database db = new Database(new AsyncResponse() {
             @Override
             public void resultHandler(Map<String, Object> result, int resultCode) {
-                List<Event> eventList = new ArrayList<>();
+                List<Event> currrentEventList = new ArrayList<>();
+                List<Event> pastEventList = new ArrayList<>();
                 for (String eventId : result.keySet()) {
                     Event event = (Event) result.get(eventId);
                     assert event != null;
                     event.setEventId(eventId);
-                    eventList.add(event);
+                    if (event.end.getSeconds() >= getTodayDate().getTime()/1000L) {
+                        currrentEventList.add(event);
+                    } else pastEventList.add(event);
                 }
                 if (resultCode == 0) {
-                    Collections.sort(eventList);
+                    Collections.sort(currrentEventList);
+                    Collections.sort(pastEventList);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                     RecyclerView eventsListView = view.findViewById(R.id.eventsList);
                     eventsListView.setLayoutManager(layoutManager);
                     LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                    RecyclerView nearbyEventsListView = view.findViewById(R.id.nearbyEventsList);
-                    nearbyEventsListView.setLayoutManager(layoutManager2);
+                    RecyclerView pastEventsListView = view.findViewById(R.id.pastEventsList);
+                    pastEventsListView.setLayoutManager(layoutManager2);
                     if (getContext() != null) {
-                        EventsAdapter eventsAdapter = new EventsAdapter(getContext(), eventList);
-                        eventsListView.setAdapter(eventsAdapter);
-                        nearbyEventsListView.setAdapter(eventsAdapter);
+                        EventsAdapter currentAdapter = new EventsAdapter(getContext(), currrentEventList);
+                        EventsAdapter pastAdapter = new EventsAdapter(getContext(), pastEventList);
+                        eventsListView.setAdapter(currentAdapter);
+                        pastEventsListView.setAdapter(pastAdapter);
                     }
                 }
             }
@@ -57,7 +62,7 @@ public class UserDiscoverFragment extends Fragment {
             }
         });
 
-        db.compareGreater("events", "end", getTodayDate(), Event.class, 0);
+        db.readCollection("events", Event.class, 0);
         return view;
     }
 

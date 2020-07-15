@@ -137,49 +137,6 @@
             mapbox:mapbox_cameraTargetLng="36.807337"
             mapbox:mapbox_cameraZoom="16" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Lineup" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lineUpList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Event Calendar" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendarList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="20dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/addToCalendar"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            app:backgroundTint="#00bbff"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="20dp"
-            android:text="Add to my Calendar" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
