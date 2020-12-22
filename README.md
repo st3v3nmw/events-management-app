@@ -1,6 +1,5 @@
-# CSC227 Android App
+# Events Management App
 
-Source code for an app I created for CSC227 \
 The admin backend can be found here [Admin web backend repository](https://github.com/st3v3nmw/CSC227-web) \
 It needs some more work, but not gonna happen :)
 
