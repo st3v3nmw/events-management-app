@@ -1,22 +1,22 @@
 # Events Management App
 
 The admin backend can be found here [Admin web backend repository](https://github.com/st3v3nmw/events-management-app-backend) \
-It needs some more work, but not gonna happen :)
+It needs some more work, but...
 
 ## Screenshots
 
-![NoAuth](/screenshots/NoAuth.jpeg)
+<img src="/screenshots/NoAuth.jpeg" height="768">
 
-![SignUp](/screenshots/SignUp.jpeg)
+<img src="/screenshots/SignUp.jpeg" height="768">
 
-![Login](/screenshots/Login.jpeg)
+<img src="/screenshots/Login.jpeg" height="768">
 
-![Forgot Password](/screenshots/ForgotPassword.jpeg)
+<img src="/screenshots/ForgotPassword.jpeg" height="768">
 
-![Discover](/screenshots/Discover.jpeg)
+<img src="/screenshots/Discover.jpeg" height="768">
 
-![NotBooked](/screenshots/NotBooked.jpeg)
+<img src="/screenshots/NotBooked.jpeg" height="768">
 
-![Booked](/screenshots/Booked.jpeg)
+<img src="/screenshots/Booked.jpeg" height="768">
 
-![Scanning](/screenshots/Scanning.png)
+<img src="/screenshots/Scanning.png" height="768">
